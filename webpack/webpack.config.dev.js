@@ -1,7 +1,9 @@
 const webpack = require('webpack')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const { merge } = require("webpack-merge")
+const baseConfig = require("./webpack.config.base");
 
-module.exports = {
+const config = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   devServer: {
@@ -15,3 +17,5 @@ module.exports = {
     }),
   ],
 }
+
+module.exports = merge(baseConfig, config)
