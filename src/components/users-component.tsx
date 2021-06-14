@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUsers } from '../redux/actions/users'
-import Card from '../components/CardComponents'
+import Card from './card-components'
 import { RootState } from '../redux/reducers'
 
 const Users = () => {
@@ -12,14 +12,15 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(getUsers())
-  }, [])
+  }, [dispatch])
 
   return (
     <>
-      {users.loading && <p>Loading...</p>}
+      {loading && <h2>Loading...</h2>}
       {users.length === 0 && !loading && <p>No users available!</p>}
       {error && !loading && <p>{error}</p>}
-      {users.length > 0 && users.map((user) => <Card key={1} user={user} />)}
+      {users.length > 0 &&
+        users.map((user) => <Card key={Number(user.id)} user={user} />)}
     </>
   )
 }

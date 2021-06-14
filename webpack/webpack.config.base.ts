@@ -1,7 +1,9 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import Dotenv from 'dotenv-webpack'
+import * as path from 'path'
+import { Configuration as WebpackConfiguration } from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-module.exports = {
+const config: WebpackConfiguration = {
   entry: path.resolve(__dirname, '..', './src/index.tsx'),
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -18,8 +20,15 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
@@ -39,6 +48,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './public/index.html'),
     }),
+    new Dotenv(),
   ],
   stats: 'errors-only',
 }
+
+export default config
